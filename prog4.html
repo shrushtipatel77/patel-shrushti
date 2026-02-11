@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Person {
+            constructor(name, age, country) {
+                this.name = name;
+                this.age = age;
+                this.country = country;
+            }
+
+            displayDetails() {
+                console.log(`Name: ${this.name}, Age: ${this.age}, Country: ${this.country}`);
+            }
+        }
+
+        
+        const person1 = new Person("Alice", 25, "USA");
+        const person2 = new Person("John", 30, "Canada");
+
+        person1.displayDetails();
+        person2.displayDetails();
+
+    </script>
+</body>
+
+</html>

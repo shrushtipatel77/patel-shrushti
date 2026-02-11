@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>corona api</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 50px 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        input {
+            padding: 12px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            width: 250px;
+            margin-right: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #result {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 25px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            min-width: 320px;
+            display: inline-block;
+        }
+
+        #result h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        #result p {
+            font-size: 1.1rem;
+            margin: 8px 0;
+        }
+
+
+        #result .stat {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+
+        @media (max-width: 500px) {
+            input {
+                width: 70%;
+                margin-bottom: 10px;
+            }
+
+            button {
+                width: 70%;
+                margin-top: 10px;
+                margin-right: 0;
+            }
+
+            #result {
+                width: 80%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>City / Country Wise Corona Data</h2>
+
+    <input type="text" id="city" placeholder="Enter city or country">
+    <button onclick="getCoronaData()">Get Data</button>
+
+    <div id="result"></div>
+
+    <script>
+        function getCoronaData() {
+            var city = document.getElementById("city").value.trim();
+            var result = document.getElementById("result");
+
+            if (city === "") {
+                result.innerHTML = "Please enter a city or country";
+                return;
+            }
+
+            const cityToCountry = {
+                Mumbai: "India",
+                Delhi: "India",
+                Bangalore: "India",
+                London: "United Kingdom",
+                Manchester: "United Kingdom",
+                NewYork: "USA",
+                LosAngeles: "USA",
+                Toronto: "Canada",
+                Vancouver: "Canada"
+            };
+
+            var country = cityToCountry[city] || city;
+
+            var xhr = new XMLHttpRequest();
+            var url = "https://disease.sh/v3/covid-19/countries/" + encodeURIComponent(country);
+
+            xhr.open("GET", url, true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+
+                    result.innerHTML = `
+            <h3>${data.country}</h3>
+            <div class="stat">Total Cases: ${data.cases.toLocaleString()}</div>
+            <div class="stat">Total Deaths: ${data.deaths.toLocaleString()}</div>
+            <div class="stat">Total Recovered: ${data.recovered.toLocaleString()}</div>
+            <div class="stat">Active Cases: ${data.active.toLocaleString()}</div>
+          `;
+                } else {
+                    result.innerHTML = "Country not found!";
+                }
+            };
+
+            xhr.onerror = function () {
+                result.innerHTML = "Network error! Please try again.";
+            };
+
+            xhr.send();
+        }
+    </script>
+
+</body>
+
+</html>

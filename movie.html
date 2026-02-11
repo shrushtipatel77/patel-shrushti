@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Movie API Page</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    .movie {
+      border: 1px solid #ccc;
+      margin: 10px 0;
+      padding: 10px;
+      display: flex;
+      gap: 15px;
+    }
+
+    img {
+      width: 100px;
+    }
+
+    button {
+      padding: 8px 12px;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Movies List</h2>
+  <div id="movies"></div>
+  <button id="prev">Previous</button>
+  <button id="next">Next</button>
+
+  <script>
+    let apiUrl = "https://jsonfakery.com/movies/simple-paginate";
+
+    function loadMovies(url) {
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          const moviesDiv = document.getElementById("movies");
+          moviesDiv.innerHTML = "";
+
+          data.data.forEach(movie => {
+            moviesDiv.innerHTML += `
+          <div class="movie">
+            <img src="${movie.poster_path}" alt="${movie.original_title}">
+            <div>
+              <h3>${movie.original_title}</h3>
+              <p>Release Date: ${movie.release_date}</p>
+              <p>Rating: ${movie.vote_average} (${movie.vote_count} votes)</p>
+            </div>
+          </div>
+        `;
+          });
+
+          // Pagination buttons
+          document.getElementById("next").onclick = () => {
+            if (data.next_page_url) loadMovies(data.next_page_url);
+          };
+          document.getElementById("prev").onclick = () => {
+            if (data.prev_page_url) loadMovies(data.prev_page_url);
+          };
+        })
+        .catch(err => console.log("Error:", err));
+    }
+
+    // Initial load
+    loadMovies(apiUrl);
+  </script>
+
+</body>
+
+</html>

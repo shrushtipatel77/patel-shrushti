@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        class Vehicle {
+            constructor(make, model, year) {
+                this.make = make;
+                this.model = model;
+                this.year = year;
+            }
+
+            displayDetails() {
+                console.log(`Vehicle: ${this.year} ${this.make} ${this.model}`);
+            }
+        }
+
+        class Car extends Vehicle {
+            constructor(make, model, year, doors) {
+                super(make, model, year);
+                this.doors = doors;
+            }
+
+            displayDetails() {
+                console.log(`Car: ${this.year} ${this.make} ${this.model}, Doors: ${this.doors}`);
+            }
+        }
+
+        const car1 = new Car("Toyota", "Corolla", 2022, 4);
+        car1.displayDetails();
+
+
+    </script>
+</body>
+
+</html>

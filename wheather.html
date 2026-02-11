@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Weather API</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 340px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6c63ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            background: #6c63ff;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #5548d9;
+        }
+
+        #weather {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #weather h3 {
+            margin-bottom: 10px;
+        }
+
+        #weather p {
+            margin: 6px 0;
+            font-size: 15px;
+        }
+
+        .error {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>🌤 City Weather Checker</h2>
+
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button onclick="fetchWeather()">Get Weather</button>
+
+        <div id="weather"></div>
+    </div>
+
+    <script>
+        const apiKey = "5f70324377bd821993be6f3c04936187";
+
+        function fetchWeather() {
+            const city = document.getElementById('cityInput').value.trim();
+            const display = document.getElementById('weather');
+
+            if (!city) {
+                display.innerHTML = `<p class="error">Please enter a city name!</p>`;
+                return;
+            }
+
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("City not found!");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const desc = data.weather[0].description;
+                    const temp = data.main.temp;
+                    const humidity = data.main.humidity;
+                    const wind = data.wind.speed;
+
+                    display.innerHTML = `
+                        <h3>Weather in ${data.name}</h3>
+                        <p><strong>Description:</strong> ${desc}</p>
+                        <p><strong>Temperature:</strong> ${temp} °C</p>
+                        <p><strong>Humidity:</strong> ${humidity}%</p>
+                        <p><strong>Wind Speed:</strong> ${wind} m/s</p>
+                    `;
+                })
+                .catch(err => {
+                    display.innerHTML = `<p class="error">${err.message}</p>`;
+                });
+        }
+    </script>
+
+</body>
+
+</html>

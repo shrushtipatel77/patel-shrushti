@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        class BankAccount {
+            constructor(accountNumber, balance = 0) {
+                this.accountNumber = accountNumber;
+                this.balance = balance;
+            }
+
+            deposit(amount) {
+                if (amount > 0) {
+                    this.balance += amount;
+                    console.log(`Deposited: $${amount}`);
+                } else {
+                    console.log("Deposit amount must be positive.");
+                }
+            }
+
+            withdraw(amount) {
+                if (amount > 0 && amount <= this.balance) {
+                    this.balance -= amount;
+                    console.log(`Withdrawn: $${amount}`);
+                } else {
+                    console.log("Invalid or insufficient funds.");
+                }
+            }
+
+            displayBalance() {
+                console.log(`Account ${this.accountNumber} Balance: $${this.balance}`);
+            }
+        }
+
+        const account1 = new BankAccount("12345", 500);
+        const account2 = new BankAccount("67890", 1000);
+
+        account1.deposit(200);
+        account1.withdraw(150);
+        account1.displayBalance();
+
+        account2.deposit(300);
+        account2.withdraw(500);
+        account2.displayBalance();
+
+
+    </script>
+
+</body>
+
+</html>
