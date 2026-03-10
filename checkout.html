@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Easy--Buy - Checkout</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <span class="logo"><a href="index.html">Easy--Buy</a></span>
+        <ul id="navMenu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="cart.html" class="nav-link"> <span class="cart-icon">&#128722;<span class="cart-count"
+                            id="cartCount"></span></span></a></li>
+            <li><a href="checkout.html" class="nav-link active">Checkout</a></li>
+            <li>
+    <a href="favorites.html" class="nav-link">
+        ❤️
+        <span class="fav-count" id="favCount"></span>
+    </a>
+</li>
+            <li><a href="orderhistory.html" class="nav-link">Order History</a></li>
+
+        </ul>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button id="searchBtn">🔍</button>
+        </div>
+        <span class="user" id="userArea"></span>
+
+
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black;">Log-in</h3>
+                <input type="email" id="loginEmail" placeholder="Email" required />
+                <input type="password" id="loginPass" placeholder="Password" required />
+                <div style="margin-bottom: 10px;">
+                    <label><input type="radio" name="role" value="user" checked> User</label>
+                    <label><input type="radio" name="role" value="admin"> Admin</label>
+                </div>
+                <div id="loginError" style="color:#a91a10;font-size:.97em;margin-bottom:9px;"></div>
+                <button onclick="login()">Login</button>
+                <button onclick="showSignUp()">Sign Up</button>
+            </div>
+        </div>
+        <div id="signUpModal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black;">Sign Up</h3>
+                <input type="email" id="signUpEmail" placeholder="Email" required />
+                <input type="password" id="signUpPass" placeholder="Password" required />
+                <div style="margin-bottom: 10px;">
+                    <label><input type="radio" name="signUpRole" value="user" checked> User</label>
+                    <label><input type="radio" name="signUpRole" value="admin"> Admin</label>
+                </div>
+                <div id="signUpError" style="color:#a91a10;font-size:.97em;margin-bottom:9px;"></div>
+                <button onclick="signUp()">Sign Up</button>
+                <button onclick="showLogin()">Back to Login</button>
+            </div>
+        </div>
+    </nav>
+    <div class="checkout-page">
+        <h2>Checkout</h2>
+        <div id="checkoutMsg" style="margin-bottom:12px;color:green;font-weight:bold;"></div>
+        <form class="checkout-form" id="checkoutForm" onsubmit="event.preventDefault();payNow();">
+            <label for="c_name">Full Name</label>
+            <input id="c_name" required placeholder="Full Name">
+            <label for="c_address">Address</label>
+            <input id="c_address" required placeholder="Shipping Address">
+            <label for="c_email">Email</label>
+            <input id="c_email" type="email" required placeholder="Email">
+            <label for="c_notes">Order Notes (optional)</label>
+            <textarea id="c_notes" rows="2" placeholder="Any delivery instructions?"></textarea>
+            <label for="paymentMethod">Payment Method</label>
+            <select id="paymentMethod" required onchange="togglePaymentFields()">
+                <option value="">Select Payment Method</option>
+                <option value="creditcard">Credit Card</option>
+                <option value="debitcard">Debit Card</option>
+                <option value="onlinepayment">Online Payment</option>
+                <option value="paypal">PayPal</option>
+                <option value="gpay">Google Pay</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Net Banking</option>
+                <option value="cashondelivery">Cash on Delivery</option>
+            </select>
+            <div id="cardFields" style="display:none;">
+                <label for="cardNumber">Card Number</label>
+                <input id="cardNumber" placeholder="1234 5678 9012 3456">
+                <label for="cardExpiry">Expiry Date</label>
+                <input id="cardExpiry" placeholder="MM/YY">
+                <label for="cardCVV">CVV</label>
+                <input id="cardCVV" placeholder="123">
+            </div>
+            <div id="upiFields" style="display:none;">
+                <label for="upiId">UPI ID</label>
+                <input id="upiId" placeholder="yourname@bank">
+            </div>
+            <div id="netBankingFields" style="display:none;">
+                <label for="bankName">Bank Name</label>
+                <input id="bankName" placeholder="e.g., SBI, HDFC">
+            </div>
+            <div id="checkoutItems" style="margin:20px 0 0;"></div>
+            <div class="cart-total" id="checkoutTotal"></div>
+            <button class="pay-btn" type="submit">Pay Now</button>
+        </form>
+    </div>
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">Home</a> | <a href="products.html">Shop</a> | <a href="#">Support</a> | <a
+                href="#">About</a>
+        </div>
+        <div class="footer-contact">
+            Contact: <a href="mailto:support@Easy--Buy.com">support@Easy--Buy.com</a> | 1-800-555-1234
+        </div>
+        <div style="margin-top:8px;">&copy; 2025 Easy--Buy. All rights reserved.</div>
+    </footer>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartCount();
+            updateUserArea();
+            renderCheckout();
+        });
+    </script>
+</body>
+
+</html>

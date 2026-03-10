@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Easy--Buy - Cart</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <span class="logo"><a href="index.html">Easy--Buy</a></span>
+        <ul id="navMenu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="cart.html" class="nav-link active"> <span class="cart-icon">&#128722;<span
+                            class="cart-count" id="cartCount"></span></span></a></li>
+            <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+            <li><a href="orderhistory.html" class="nav-link">Order History</a></li>
+            
+        </ul>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button id="searchBtn">🔍</button>
+        </div>
+        <span class="user" id="userArea"></span>
+
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black;">Log-in</h3>
+                <input type="email" id="loginEmail" placeholder="Email" required />
+                <input type="password" id="loginPass" placeholder="Password" required />
+                <div style="margin-bottom: 10px;">
+                    <label><input type="radio" name="role" value="user" checked> User</label>
+                    <label><input type="radio" name="role" value="admin"> Admin</label>
+                </div>
+                <div id="loginError" style="color:#f44336;font-size:.97em;margin-bottom:9px;"></div>
+                <button onclick="login()">Login</button>
+                <button onclick="showSignUp()">Sign Up</button>
+            </div>
+        </div>
+        <div id="signUpModal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black;">Sign Up</h3>
+                <input type="email" id="signUpEmail" placeholder="Email" required />
+                <input type="password" id="signUpPass" placeholder="Password" required />
+                <div style="margin-bottom: 10px;">
+                    <label><input type="radio" name="signUpRole" value="user" checked> User</label>
+                    <label><input type="radio" name="signUpRole" value="admin"> Admin</label>
+                </div>
+                <div id="signUpError" style="color:#f44336;font-size:.97em;margin-bottom:9px;"></div>
+                <button onclick="signUp()">Sign Up</button>
+                <button onclick="showLogin()">Back to Login</button>
+            </div>
+        </div>
+    </nav>
+    <div class="cart-page">
+        <h2>Your Cart</h2>
+        <div id="cartItems">
+            <h1 id="namee"></h1>
+
+        </div>
+        <div class="cart-total" id="cartTotal"></div>
+        <div class="cart-actions">
+            <a class="checkout-btn" href="checkout.html">Proceed to Checkout</a>
+            <button class="buy-now-btn" onclick="buyNow()">Buy Now</button>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">Home</a> | <a href="products.html">Shop</a> | <a href="#">Support</a> | <a
+                href="#">About</a>
+        </div>
+        <div class="footer-contact">
+            Contact: <a href="mailto:support@Easy--Buy.com">support@Easy--Buy.com</a> | 1-800-555-1234
+        </div>
+        <div style="margin-top:8px;">&copy; 2025 Easy--Buy. All rights reserved.</div>
+    </footer>
+    <script src="app.js"></script>
+    <script>
+     document.addEventListener('DOMContentLoaded', function () {
+    updateCartCount();
+    updateFavCount();
+    updateUserArea();
+    renderCart();
+});
+
+    </script>
+</body>
+
+</html>

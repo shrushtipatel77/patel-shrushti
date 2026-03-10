@@ -1,29 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Dog Images API</title>
+    <meta charset="utf-8" />
+    <title>Easy--Buy -Home</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+    <nav class="navbar">
+        <span class="logo"><a href="index.html">Easy--buy</a></span>
+        <ul id="navMenu">
+            <li><a href="index.html" class="nav-link active">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="cart.html" class="nav-link"> <span class="cart-icon">&#128722;<span class="cart-count"
+                            id="cartCount"></span></span></a></li>
+            <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+            <li>
+    <a href="favorites.html" class="nav-link">
+        ❤️
+        <span class="fav-count" id="favCount"></span>
+    </a>
+</li>
+            <li><a href="orderhistory.html" class="nav-link">Order History</a></li>
 
-    <h2>Random Dog Image</h2>
-    <button onclick="loadDog()">Get Dog</button>
-    <br><br>
-    <img id="dogImg" width="300" />
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button id="searchBtn">🔍</button>
+        </div>
 
+        <span class="user" id="userArea"></span>
+
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black;">Log-in</h3>
+                <input type="email" id="loginEmail" placeholder="Email" required />
+                <input type="password" id="loginPass" placeholder="Password" required />
+                <div id="loginError" style="color:#f44336;font-size:.97em;margin-bottom:9px;"></div>
+                <button onclick="login()">Login</button>
+                <button onclick="showSignUp()">Sign up</button>
+            </div>
+        </div>
+
+        <div id="signUpModal" class="modal">
+            <div class="modal-content">
+                <h3 style="color: black;">Sign Up</h3>
+                <input type="email" id="signUpEmail" placeholder="Email" required />
+                <input type="password" id="signUpPass" placeholder="Password" required />
+                <div id="signUpError" style="color:#f44336;font-size:.97em;margin-bottom:9px;"></div>
+                <button onclick="signUp()">Sign Up</button>
+                <button onclick="showLogin()">Back to Login</button>
+            </div>
+        </div>
+    </nav>
+    <div class="slider" id="slider">
+        <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+        <div class="slide active-slide"><img
+                src="https://th.bing.com/th/id/OIP.PQvrGF-lRPvpoDun6XV2CgHaE8?w=289&h=194&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                alt="Big Sale"></div>
+        <div class="slide"><img
+                src="https://img.freepik.com/premium-vector/shoe-social-media-cover-banner-template-exclusive-collection-sneakers-facebook-cover-photo-design_755018-1873.jpg?semt=ais_hybrid&w=740"
+                alt="Shoes"></div>
+        <div class="slide"><img
+                src="https://mir-s3-cdn-cf.behance.net/project_modules/source/a0c9b737352801.573d3df29868a.jpg"
+                alt="Bags">
+        </div>
+        <div class="slide"><img
+                src="https://www.palmonas.com/cdn/shop/files/New_arrival_web_banner_1_1.webp?crop=center&height=794&v=1749461813&width=2000"
+                alt="Arrivals"></div>
+        <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+    </div>
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Some new style</h1>
+            <p>Discover modern fashion and accessories, delivered to your door. Free shipping over $50!<br>
+                <span style="color:var(--accent);font-size:1.1em;">New arrivals every week!</span>
+            </p>
+            <a class="hero-btn" href="products.html">Shop Now</a>
+        </div>
+        <div class="hero-img">
+            <img src="data:image/webp;base64,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"
+                alt="fashion">
+        </div>
+    </div>
+    <div class="testimonials">
+        <div class="testimonial-title">What Our Customers Say</div>
+        <div class="testimonial-list">
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandy">
+                <div class="testimonial-name">Sandy V.</div>
+                <div class="testimonial-role">Marketing Manager</div>
+                <div class="testimonial-text">"Lightning-fast delivery and quality products. My new favorite shop!"
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Raj">
+                <div class="testimonial-name">Raj K.</div>
+                <div class="testimonial-role">Software Engineer</div>
+                <div class="testimonial-text">"Loved the easy returns. Customer service is top-notch!"</div>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Mina">
+                <div class="testimonial-name">Mina S.</div>
+                <div class="testimonial-role">Fashion Blogger</div>
+                <div class="testimonial-text">"The styles are fresh and the prices are unbeatable. Highly recommended!"
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="faq">
+        <div class="faq-title">Frequently Asked Questions</div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-q">How long does shipping take? <span>▼</span></div>
+                <div class="faq-a">We ship within 1 business day. Most orders arrive within 1-3 days.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Can I return or exchange an item? <span>▼</span></div>
+                <div class="faq-a">Yes! We offer hassle-free 30 day returns & exchanges on all products.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">How do I track my order? <span>▼</span></div>
+                <div class="faq-a">After shipping, you'll receive a tracking link via email.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Are my payments secure? <span>▼</span></div>
+                <div class="faq-a">Absolutely! We use industry-standard encryption and never store payment details.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">Home</a> | <a href="products.html">Shop</a> | <a href="#">Support</a> | <a
+                href="#">About</a>
+        </div>
+        <div class="footer-contact">
+            Contact: <a href="mailto:support@Eva-Buy.com">support@Easy--Buy.com</a> | 1-800-555-1234
+        </div>
+        <div style="margin-top:8px;">&copy; 2025 Easy--Buy. All rights reserved.</div>
+    </footer>
+    <script src="app.js"></script>
     <script>
-        function loadDog() {
-            const xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    const data = JSON.parse(this.responseText);
-                    document.getElementById("dogImg").src = data.message;
-                }
-            };
-            xhttp.open("GET", "https://dog.ceo/api/breeds/image/random", true);
-            xhttp.send();
+        function renderSliderDots() {
+            let dotsDiv = document.getElementById('sliderDots');
+            let slides = document.querySelectorAll('.slide');
+            dotsDiv.innerHTML = '';
+            for (let i = 0; i < slides.length; i++) {
+                let d = document.createElement('span');
+                d.className = 'slider-dot' + (i === 0 ? ' active-dot' : '');
+                d.onclick = () => showSlide(i);
+                dotsDiv.appendChild(d);
+            }
         }
-
+        let slideIndex = 0;
+        function showSlide(idx) {
+            let slides = document.querySelectorAll('.slide');
+            let dots = document.querySelectorAll('.slider-dot');
+            slides.forEach(s => s.classList.remove('active-slide'));
+            dots.forEach(d => d.classList.remove('active-dot'));
+            slideIndex = (idx + slides.length) % slides.length;
+            slides[slideIndex].classList.add('active-slide');
+            dots[slideIndex].classList.add('active-dot');
+        }
+        function changeSlide(n) { showSlide(slideIndex + n); }
+        setInterval(() => changeSlide(1), 5400);
+        document.addEventListener("DOMContentLoaded", function () {
+            renderSliderDots();
+            showSlide(0);
+            updateCartCount && updateCartCount();
+            updateUserArea && updateUserArea();
+        });
     </script>
-
 </body>
+
 </html>

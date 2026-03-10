@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - Easy--Buy</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <span class="logo"><a href="index.html">Easy--buy</a></span>
+        <ul id="navMenu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="cart.html" class="nav-link"> <span class="cart-icon">&#128722;<span class="cart-count"
+                            id="cartCount"></span></span></a></li>
+            <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+            <li><a href="favorites.html" class="nav-link active"> ❤️ <span class="fav-count"
+                        id="favCount"></span></a></li>
+            <li><a href="orderhistory.html" class="nav-link">Order History</a></li>
+        </ul>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button id="searchBtn">🔍</button>
+        </div>
+        <span class="user" id="userArea"></span>
+    </nav>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: black;">Log-in</h3>
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <input type="password" id="loginPass" placeholder="Password" required />
+            <div style="margin-bottom: 10px;">
+                <label><input type="radio" name="role" value="user" checked> User</label>
+                <label><input type="radio" name="role" value="admin"> Admin</label>
+            </div>
+            <div id="loginError" style="color:#f44336;font-size:.97em;margin-bottom:9px;"></div>
+            <button onclick="login()">Login</button>
+            <button onclick="showSignUp()">Sign Up</button>
+        </div>
+    </div>
+    <div id="signUpModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: black;">Sign Up</h3>
+            <input type="email" id="signUpEmail" placeholder="Email" required />
+            <input type="password" id="signUpPass" placeholder="Password" required />
+            <div style="margin-bottom: 10px;">
+                <label><input type="radio" name="signUpRole" value="user" checked> User</label>
+                <label><input type="radio" name="signUpRole" value="admin"> Admin</label>
+            </div>
+            <div id="signUpError" style="color:#f44336;font-size:.97em;margin-bottom:9px;"></div>
+            <button onclick="signUp()">Sign Up</button>
+            <button onclick="showLogin()">Back to Login</button>
+        </div>
+    </div>
+
+    <main class="favorites-page">
+        <h2>Your Favorites</h2>
+        <div id="favoritesList"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">Home</a> | <a href="products.html">Shop</a> | <a href="#">Support</a> | <a
+                href="#">About</a>
+        </div>
+        <div class="footer-contact">
+            Contact: <a href="mailto:support@Easy--Buy.com">support@Easy--Buy.com</a> | 1-800-555-1234
+        </div>
+        <div style="margin-top:8px;">&copy; 2025 Easy--Buy. All rights reserved.</div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartCount();
+            updateFavCount();
+            updateUserArea();
+            renderFavorites();
+        });
+    </script>
+</body>
+
+</html>

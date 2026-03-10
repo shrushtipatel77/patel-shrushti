@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-container h2 {
+            margin-top: 0;
+            color: #2d3748;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .form-group input,
+        .form-group select {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-group button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .controls h2 {
+            margin-top: 0;
+            color: #2d3748;
+            font-size: 1.3em;
+        }
+
+        .controls .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .controls input,
+        .controls select {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .controls input:focus,
+        .controls select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product h3 {
+            color: #2d3748;
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .product p {
+            color: #718096;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .product .price {
+            font-weight: bold;
+            color: #38a169;
+            font-size: 1.1em;
+        }
+
+        .actions {
+            margin-top: 15px;
+        }
+
+        .actions button {
+            padding: 8px 15px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .actions .edit {
+            background: #3182ce;
+            color: white;
+        }
+
+        .actions .edit:hover {
+            background: #2c5282;
+        }
+
+        .actions .delete {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .actions .delete:hover {
+            background: #c53030;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-group,
+            .control-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group button,
+            .controls input,
+            .controls select {
+                min-width: auto;
+            }
+
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Product Page (CRUD)</h1>
+
+        <!--INPUT FORM -->
+        <div class="form-container">
+            <h2>Add / Edit Product</h2>
+            <div class="form-group">
+                <input type="text" id="title" placeholder="Product Title">
+                <input type="number" id="price" placeholder="Price">
+                <input type="text" id="image" placeholder="Image URL">
+                <input type="text" id="category" placeholder="Category">
+                <button onclick="addProduct()">➕ Add Product</button>
+            </div>
+        </div>
+
+        <!--SEARCH / SORT / FILTER -->
+        <div class="controls">
+            <h2>Search, Sort & Filter</h2>
+            <div class="control-group">
+                <input type="text" id="search" placeholder="Search by title" onkeyup="searchProduct()">
+                <select onchange="sortProducts(this.value)">
+                    <option value="">Sort by Price</option>
+                    <option value="low">Low to High</option>
+                    <option value="high">High to Low</option>
+                </select>
+                <input type="text" id="filterCategory" placeholder="Filter by category" onkeyup="filterByCategory()">
+            </div>
+        </div>
+
+        <!-- DISPLAY PRODUCTS -->
+        <div class="product-list" id="productList"></div>
+    </div>
+
+    <script>
+
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        let editIndex = null;
+
+        displayProducts();
+
+
+        // ADD PRODUCT
+        function addProduct() {
+            let title = document.getElementById("title").value.trim();
+            let price = document.getElementById("price").value.trim();
+            let image = document.getElementById("image").value.trim();
+            let category = document.getElementById("category").value.trim();
+
+            if (title === "" || price === "") {
+                alert("Title and Price are required!");
+                return;
+            }
+
+            let product = {
+                id: Date.now(),
+                title,
+                price: parseFloat(price),
+                image,
+                category
+            };
+
+            if (editIndex === null) {
+                products.push(product);
+            } else {
+                products[editIndex] = product;
+                editIndex = null;
+            }
+
+            saveToLocalStorage();
+            displayProducts();
+            clearInputs();
+        }
+
+
+        //DISPLAY PRODUCTS
+        function displayProducts(list = products) {
+            let productList = document.getElementById("productList");
+            productList.innerHTML = "";
+
+            list.forEach((product, index) => {
+                productList.innerHTML += `
+            <div class="product">
+                <img src="${product.image || 'https://via.placeholder.com/150'}">
+                <h3>${product.title}</h3>
+                <p class="price">Price: $${product.price}</p>
+                <p>Category: ${product.category}</p>
+                <div class="actions">
+                    <button class="edit" onclick="editProduct(${index})">✏️ Edit</button>
+                    <button class="delete" onclick="deleteProduct(${index})">🗑️ Delete</button>
+                </div>
+            </div>
+        `;
+            });
+        }
+
+
+        // LOCAL STORAGE
+        function saveToLocalStorage() {
+            localStorage.setItem("products", JSON.stringify(products));
+        }
+
+
+        // EDIT PRODUCT
+        function editProduct(index) {
+            let product = products[index];
+
+            document.getElementById("title").value = product.title;
+            document.getElementById("price").value = product.price;
+            document.getElementById("image").value = product.image;
+            document.getElementById("category").value = product.category;
+
+            editIndex = index;
+        }
+
+
+        //DELETE PRODUCT
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            saveToLocalStorage();
+            displayProducts();
+        }
+
+
+        //SORT PRODUCTS
+        function sortProducts(order) {
+            let sorted = [...products];
+            if (order === "low") {
+                sorted.sort((a, b) => a.price - b.price);
+            } else if (order === "high") {
+                sorted.sort((a, b) => b.price - a.price);
+            }
+            displayProducts(sorted);
+        }
+
+
+        // SEARCH PRODUCT
+        function searchProduct() {
+            let keyword = document.getElementById("search").value.toLowerCase();
+            let filtered = products.filter(p => p.title.toLowerCase().includes(keyword));
+            displayProducts(filtered);
+        }
+
+
+        // FILTER BY CATEGORY
+        function filterByCategory() {
+            let category = document.getElementById("filterCategory").value.toLowerCase();
+            let filtered = products.filter(p => p.category.toLowerCase().includes(category));
+            displayProducts(filtered);
+        }
+
+
+        //CLEAR INPUT FIELDS
+        function clearInputs() {
+            document.getElementById("title").value = "";
+            document.getElementById("price").value = "";
+            document.getElementById("image").value = "";
+            document.getElementById("category").value = "";
+        }
+
+    </script>
+
+</body>
+
+</html>
